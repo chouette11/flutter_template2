@@ -13,16 +13,12 @@ part 'presentation_providers.g.dart';
 
 final messageTextFieldController = Provider((_) => TextEditingController());
 
-final tutorialTextFieldController = Provider((_) => TextEditingController());
-
 final idTextFieldProvider = StateProvider<String>((ref) => '');
 
 final uidProvider = StateProvider<String>((ref) =>
     ref.read(firebaseAuthProvider).currentUser?.uid ?? const Uuid().v4());
 
 final errorTextProvider = StateProvider((ref) => '');
-
-final answerAssignedIdProvider = StateProvider<int>((ref) => 404);
 
 final messagesStreamProvider = StreamProvider.family(
   (ref, String roomId) =>
@@ -33,12 +29,6 @@ final roomStreamProvider = StreamProvider.family(
   (ref, String roomId) =>
       ref.watch(roomRepositoryProvider).getRoomStream(roomId),
 );
-
-final topicProvider =
-    FutureProvider.family<String, String>((ref, String roomId) async {
-  final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
-  return room.topic;
-});
 
 @riverpod
 class LimitTime extends _$LimitTime {
